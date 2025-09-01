@@ -1,40 +1,65 @@
 
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 import { Wind, Droplets, Eye, Thermometer } from 'lucide-react';
 
 export default function SearchComponent() {
 
     const [city, setCity] = useState("")
+    const [error, setError] = useState(null);
     const [weatherData, setWeatherData] = useState(null)
     const API_URL = "https://api.openweathermap.org/data/2.5/weather";
     const API_KEY = "5aaefadce9d04dff44261021293e878b";
 
     async function getWeatherDetails() {
-        let response = await fetch(`${API_URL}?q=${city}&appid=${API_KEY}&units=metrics`)
-        console.log(response)
-        let responsejson = await response.json()
-        console.log(responsejson)
+        try {
+            if (!city.trim()) {
+                setError("Please enter a city name.");
+                toast.error("⚠️ Please enter a city name.");
+                return;
+            }
+            setError(null); // reset error
 
-        const result = {
-            name: responsejson.name,
-            temp: (responsejson.main.temp - 273.15).toFixed(2),   // Celsius
-            temp_max: (responsejson.main.temp_max - 273.15).toFixed(2),
-            temp_min: (responsejson.main.temp_min - 273.15).toFixed(2),
-            feels: (responsejson.main.feels_like - 273.15).toFixed(2),
-            humidity: responsejson.main.humidity,
-            description: responsejson.weather[0].description,
-            visibility: responsejson.visibility,
-            speed: responsejson.wind.speed,
-            condition: responsejson.weather[0].main
-        };
+            let response = await fetch(`${API_URL}?q=${city}&appid=${API_KEY}&units=metrics`)
 
-        let data = localStorage.setItem("weatherdata", JSON.stringify(result))
-        let getdata = localStorage.getItem("weatherdata");
-        let parsedata = JSON.parse(getdata)
-        setWeatherData(parsedata)
-        console.log('parsedata', parsedata.feels)
+            if (!response.ok) {
+                toast.error("City not found. Please enter a valid city name.")
+                throw new Error("City not found. Please enter a valid city name.");
+
+            }
+
+            let responsejson = await response.json();
+            console.log(responsejson)
+
+            const result = {
+                name: responsejson.name,
+                temp: (responsejson.main.temp - 273.15).toFixed(2),   // Celsius
+                temp_max: (responsejson.main.temp_max - 273.15).toFixed(2),
+                temp_min: (responsejson.main.temp_min - 273.15).toFixed(2),
+                feels: (responsejson.main.feels_like - 273.15).toFixed(2),
+                humidity: responsejson.main.humidity,
+                description: responsejson.weather[0].description,
+                visibility: responsejson.visibility,
+                speed: responsejson.wind.speed,
+                condition: responsejson.weather[0].main
+            };
+
+            let data = localStorage.setItem("weatherdata", JSON.stringify(result))
+            let getdata = localStorage.getItem("weatherdata");
+            let parsedata = JSON.parse(getdata)
+            setWeatherData(parsedata)
+            console.log('parsedata', parsedata.feels)
+
+            toast.success(`Weather data for ${result.name} loaded successfully!`);
+        } catch (err) {
+            console.error(err.message);
+            setWeatherData(null);
+            setError(err.message);
+            toast.error(error)
+        }
     }
 
     function searchCity(e) {
@@ -84,6 +109,10 @@ export default function SearchComponent() {
                 variant="outlined"
                 onChange={searchCity} required /><br></br><br></br>
             <Button variant="contained" type='submit' onClick={submit}>Search</Button><br></br><br></br>
+
+            {/* Toastify Container */}
+            <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+
             <div className="w-96 bg-gradient-to-br from-blue-600 via-purple-600 to-purple-800 rounded-3xl p-6 text-white shadow-2xl  m-auto ">
 
                 {/* Header */}

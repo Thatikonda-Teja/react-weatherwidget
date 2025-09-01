@@ -1,6 +1,6 @@
 Weather Widget App
 
-A simple and elegant React Weather Widget built with React, Material UI, TailwindCSS, and Lucide Icons.
+A simple and elegant React Weather Widget built with React, Material UI, TailwindCSS, and Lucide Icons ,React-Toastify.
 It fetches real-time weather data from the OpenWeatherMap API and displays essential details like temperature, humidity, wind speed, and visibility in a beautifully styled card.
 
 🚀 Features
@@ -15,7 +15,12 @@ It fetches real-time weather data from the OpenWeatherMap API and displays essen
 
 🎨 Modern UI with Material UI + Tailwind CSS
 
+📱 Responsive design for all devices
+
+⚠️ Better error handling for invalid city names with React-Toastify
+
 💾 Stores last fetched data in localStorage
+
 
 🛠️ Tech Stack
 
@@ -27,13 +32,15 @@ Tailwind CSS (Styling)
 
 Lucide React (Weather-related icons)
 
+React Toastify (Error notifications)
+
 OpenWeatherMap API (Weather data source)
 
 📦 Installation
 
 Clone the repo and install dependencies:
 
-git clone https://github.com/your-username/weather-widget.git
+git clone https://github.com/Thatikonda-Teja/react-weatherwidget.git
 cd weather-widget
 npm install
 
@@ -42,7 +49,6 @@ npm install
 Start the development server:
 
 npm start
-
 
 Open in browser:
 
@@ -63,26 +69,24 @@ const API_KEY = "YOUR_API_KEY_HERE";
 📷 Screenshots
 ![Weather Widget Screenshot](./screenshots/weather-widget.png)
 
-🗂️ Project Structure
 weather-widget/
 │── src/
 │   ├── components/
 │   │   └── SearchComponent.js
 │   ├── App.js
 │   ├── index.js
-│   └── styles.css
+│  
+│── screenshots/
+│   └── weather-widget.png
 │── package.json
 │── README.md
+
 
 📌 Future Improvements
 
 🌍 Add support for multiple cities
 
 📊 5-day weather forecast
-
-📱 Responsive design for all devices
-
-🕵️ Better error handling for invalid city names
 
 🤝 Contributing
 
