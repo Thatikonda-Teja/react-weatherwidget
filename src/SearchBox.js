@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from 'react';
 import { Wind, Droplets, Eye, Thermometer } from 'lucide-react';
+import bg from './assets/bg.png';
 
 export default function SearchComponent() {
 
@@ -100,7 +101,14 @@ export default function SearchComponent() {
     };
 
     return (
-        <div>
+        < div
+            style={{
+                backgroundImage: `url(${bg})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                height: "100vh"
+            }}
+        >
             <h1 className='m-4 text-[40px] font-bold text-black'>Search Weather Widget</h1>
             <TextField
                 hiddenLabel
@@ -159,6 +167,7 @@ export default function SearchComponent() {
                 </div>
             </div>
         </div >
+     
     )
 }
 
